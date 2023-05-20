@@ -1,0 +1,39 @@
+`timescale 1ns / 1ps
+
+module mux_8x1_4x1_2x1_muxes(D,S,Y
+
+    );
+    input [7:0]D;
+    input [2:0]S;
+    output Y;
+    wire [1:0]A;
+     mux_4x1 mux_1(S[1:0],D[3:0],A[0]);
+     mux_4x1 mux_2(S[1:0],D[7:4],A[1]);
+     MUX_2x1 mux_3(A[1:0],Y,S[2]);
+endmodule
+
+module mux_4x1(S,D,Y
+
+    );
+    input [1:0]S;
+    input [3:0]D;
+    output reg Y;
+    always@(S or D)
+    begin
+        case(S)
+            2'b00 : Y <= D[0];
+            2'b01 : Y <= D[1];
+            2'b10 : Y <= D[2];
+            2'b11 : Y <= D[3];
+        endcase
+    end
+endmodule
+
+module MUX_2x1(I,Y,S
+
+    );
+    input [1:0]I;
+    input S;
+    output Y;
+    assign Y = (S == 0)?I[0]:I[1];
+endmodule
